@@ -63,7 +63,7 @@ Some things to note:
 In order to push to this remote repository, you'll need to add the remote to your development machine:
 
 ```sh
-git remote add pi pi@submarine:gizmo-hydroponics-v1.git
+git remote add pi pi@hydroponics.local:gizmo-hydroponics-v1.git
 ```
 
 You'll now be able to push to that repository:
