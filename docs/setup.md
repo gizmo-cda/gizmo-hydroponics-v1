@@ -17,6 +17,9 @@ profile static_eth0
 static ip_address=192.168.0.1/24
 ```
 
+Note that recent version of Raspbian have lines similar to this that have been commented out. Feel free to uncomment
+those lines, but be sure the ip_address matches what is listed above.
+
 # Setup Git Remote
 
 Run the following commands on the Pi to create the git remote directory:
