@@ -1,3 +1,3 @@
-# g2x-hydroponics-v1
+# gizmo-hydroponics-v1
 
-The initial incarnation of the Gizmo Hydroponics Project
+The Gizmo Hydroponics Project
