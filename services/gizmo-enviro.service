@@ -1,0 +1,16 @@
+[Unit]
+Description=Gizmo Enviro Service
+
+[Service]
+ExecStart=/usr/bin/python3 /home/pi/app/enviro.py
+WorkingDirectory=/home/pi/app
+Restart=always
+RestartSec=10
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=gizmo-enviro
+User=pi
+Group=pi
+
+[Install]
+WantedBy=multi-user.target
