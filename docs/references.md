@@ -1,0 +1,2 @@
+- [Raspberry Pi Pinout](https://pinout.xyz/)
+- [Arduino Nano Pinout](http://christianto.tjahyadi.com/wp-content/uploads/2014/11/nano.jpg)
