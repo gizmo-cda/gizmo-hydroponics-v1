@@ -24,28 +24,28 @@ const COMMANDS = {
     READ_PH: {
         opcode: 4,
         result: {
-            value: "long"
+            value: "word"
         }
     },
     READ_TEMPERATURE: {
         opcode: 5,
         result: {
-            value: "long"
+            value: "word"
         }
     },
     READ_EC: {
         opcode: 6,
         result: {
-            value: "long"
+            value: "word"
         }
     },
     READ_ALL: {
         opcode: 7,
         result: {
             light_value: "byte",
-            ph_value: "long",
-            temperature_value: "long",
-            ec_value: "long",
+            ph_value: "word",
+            temperature_value: "word",
+            ec_value: "word",
         }
     }
 };
@@ -66,7 +66,7 @@ function get_return_buffer(return_info) {
                     size += 1;
                     break;
 
-                case "long":
+                case "word":
                     size += 2;
                     break;
 
@@ -74,8 +74,6 @@ function get_return_buffer(return_info) {
                     console.error(`unrecognized data type '${type}'`);
             }
         }
-
-        console.log(`return buffer size is ${size}`);
 
         return Buffer.alloc(size);
     }
@@ -98,7 +96,7 @@ function parse_result(return_info, buffer) {
                     offset += 1;
                     break;
 
-                case "long":
+                case "word":
                     result[p] = buffer[offset] + (buffer[offset + 1] << 8);
                     offset += 2;
                     break;
