@@ -1,0 +1,21 @@
+{
+  "name": "hydroponics_app",
+  "version": "1.0.0",
+  "description": "Raspberry Pi app for Gizmo Hydroponics project",
+  "main": "app.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "/home/pi/gizmo-hydroponics-v1.git/"
+  },
+  "author": "Kevin Lindsey <kevin@kevlindev.com>",
+  "license": "BSD-3-Clause",
+  "dependencies": {
+    "i2c-bus": "^4.0.5"
+  }
+}
