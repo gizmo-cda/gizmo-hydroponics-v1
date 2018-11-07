@@ -96,7 +96,7 @@ void receiveData(int byteCount) {
         break;
       case READ_ALL:
         Serial.println("read all");
-        add_int(1);
+        add_byte(1);
         add_int(256);
         add_int(257);
         add_int(258);
