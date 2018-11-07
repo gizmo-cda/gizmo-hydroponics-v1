@@ -1,5 +1,6 @@
 - [Setup Static IP Fallback](#setup-static-ip-fallback)
 - [Setup Git Remote](#setup-git-remote)
+- [Setup Node](#setup-node)
 - [Setup Pimoroni](#setup-pimoroni)
 - [Setup Service](#setup-service)
 
@@ -71,6 +72,28 @@ You'll now be able to push to that repository:
 ```sh
 git push pi master
 ```
+
+# Setup Node
+
+# Install Node
+
+```sh
+sudo apt-get update
+sudo apt-get upgrade -y
+sudo apt-get install -y build-essential
+curl -L https://git.io/n-install | bash
+n lts
+n prune
+```
+
+You can check node and npm versions via:
+
+```sh
+node --version
+npm --version
+```
+
+Note that you may need to logout and back in before `n` will be in your path.
 
 # Setup Pimoroni
 
