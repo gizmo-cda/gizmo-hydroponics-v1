@@ -7,11 +7,14 @@
 #define NO_OP            0
 #define LIGHT_ON         1
 #define LIGHT_OFF        2
-#define READ_LIGHT       3
-#define READ_PH          4
-#define READ_TEMPERATURE 5
-#define READ_EC          6
-#define READ_ALL         7
+#define MOTOR_ON         3
+#define MOTOR_OFF        4
+#define READ_LIGHT       5
+#define READ_MOTOR       6
+#define READ_PH          7
+#define READ_TEMPERATURE 8
+#define READ_EC          9
+#define READ_ALL         10
 
 // globals
 byte buf[8];
@@ -78,9 +81,19 @@ void receiveData(int byteCount) {
       case LIGHT_OFF:
         Serial.println("light off");
         break;
+      case MOTOR_ON:
+        Serial.println("motor on");
+        break;
+      case MOTOR_OFF:
+        Serial.println("motor off");
+        break;
       case READ_LIGHT:
         Serial.println("read light");
         add_byte(1);
+        break;
+      case READ_MOTOR:
+        Serial.println("read motor");
+        add_byte(0);
         break;
       case READ_PH:
         Serial.println("read pH");
@@ -97,6 +110,7 @@ void receiveData(int byteCount) {
       case READ_ALL:
         Serial.println("read all");
         add_byte(1);
+        add_byte(0);
         add_int(256);
         add_int(257);
         add_int(258);
