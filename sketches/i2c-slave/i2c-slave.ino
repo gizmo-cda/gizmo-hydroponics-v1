@@ -65,8 +65,6 @@ void receiveData(int byteCount) {
 
   while (Wire.available()) {
     command = Wire.read();
-    Serial.print("command received: ");
-    Serial.println(command);
 
     // reset buffer length
     buf_len = 0;
@@ -123,7 +121,7 @@ void receiveData(int byteCount) {
 
 void sendData() {
   if (buf_len > 0) {
-    Serial.print("Sending ");
+    Serial.print("  sending ");
     Serial.print(buf_len);
     Serial.println(" bytes");
 
@@ -134,7 +132,7 @@ void sendData() {
     buf_len = 0;
   }
   else {
-    Serial.println("no data to send");
+    Serial.println("  no data to send");
   }
 }
 
