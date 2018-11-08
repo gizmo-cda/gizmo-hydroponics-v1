@@ -1,0 +1,9 @@
+{
+    "verbose": true,
+    "ignore": [ "scratch/*" ],
+    "execMap": {
+        "js": "node"
+    },
+    "script": "app.js",
+    "ext": "js mustache"
+}

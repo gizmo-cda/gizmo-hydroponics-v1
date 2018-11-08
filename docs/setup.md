@@ -3,6 +3,7 @@
 - [Setup Node](#setup-node)
 - [Setup Pimoroni](#setup-pimoroni)
 - [Setup Service](#setup-service)
+- [Setup Kiosk Mode](#setup-kiosk-mode)
 
 ---
 
@@ -134,3 +135,31 @@ You can check the status of your service:
 ```bash
 systemctl status gizmo-enviro
 ```
+
+# Setup Kiosk Mode
+
+- Install unclutter. This utility hides the mouse.
+
+```
+sudo apt-get install unclutter
+```
+
+- Create `/home/pi/.config/lxsession/LXDE-pi/autostart` and paste in the following content:
+
+```
+@lxpanel --profile LXDE-pi
+@pcmanfm --desktop --profile LXDE-pi
+@xscreensaver -no-splash
+@xset s off
+@xset -dpms
+@xset s noblank
+@unclutter -idle 3
+@chromium-browser --incognito --kiosk http://127.0.0.1:8080/
+```
+
+This will:
+
+- prevent the screen saver from starting
+- prevent the screen from going black
+- make the cursor disappear after 3 seconds of inactivity
+- will open Chromium in kiosk mode
