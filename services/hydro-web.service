@@ -1,0 +1,17 @@
+[Unit]
+Description=Gizmo Hydroponics Kiosk
+
+[Service]
+ExecStart=/home/pi/n/bin/node /home/pi/hydroponics_app/app.js
+WorkingDirectory=/home/pi/hydroponics_app
+Restart=always
+RestartSec=10
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=hydro-web
+User=pi
+Group=pi
+Environment=NODE_ENV=production HTTP_PORT=8080
+
+[Install]
+WantedBy=multi-user.target

@@ -15,34 +15,47 @@ const COMMANDS = {
     LIGHT_OFF: {
         opcode: 2
     },
-    READ_LIGHT: {
+    MOTOR_ON: {
         opcode: 3,
+    },
+    MOTOR_OFF: {
+        opcode: 4,
+    },
+    READ_LIGHT: {
+        opcode: 5,
+        result: {
+            value: "byte"
+        }
+    },
+    READ_MOTOR: {
+        opcode: 6,
         result: {
             value: "byte"
         }
     },
     READ_PH: {
-        opcode: 4,
+        opcode: 7,
         result: {
             value: "word"
         }
     },
     READ_TEMPERATURE: {
-        opcode: 5,
+        opcode: 8,
         result: {
             value: "word"
         }
     },
     READ_EC: {
-        opcode: 6,
+        opcode: 9,
         result: {
             value: "word"
         }
     },
     READ_ALL: {
-        opcode: 7,
+        opcode: 10,
         result: {
             light_value: "byte",
+            motor_value: "byte",
             ph_value: "word",
             temperature_value: "word",
             ec_value: "word",
@@ -143,15 +156,19 @@ function sleep(millis) {
 // main
 
 async function main() {
-    send_command("READ_LIGHT");
-    await sleep(1000);
-    send_command("READ_PH");
-    await sleep(1000);
-    send_command("READ_TEMPERATURE");
-    await sleep(1000);
-    send_command("READ_EC");
-    await sleep(1000);
-    send_command("READ_ALL");
+    const commands = [
+        "READ_LIGHT",
+        "READ_MOTOR",
+        "READ_PH",
+        "READ_TEMPERATURE",
+        "READ_EC",
+        "READ_ALL"
+    ];
+
+    for (var cmd of commands) {
+        send_command(cmd);
+        await sleep(1000);
+    }
 }
 
 const bus = i2c.openSync(1);
