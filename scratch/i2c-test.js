@@ -138,7 +138,6 @@ function send_command(command_name) {
 
             console.log(command_name);
             console.log(JSON.stringify(parsed_result, null, 2));
-            console.log();
         }
         else {
             console.log("no return value");
@@ -157,6 +156,10 @@ function sleep(millis) {
 
 async function main() {
     const commands = [
+		"LIGHT_ON",
+		"LIGHT_OFF",
+		"MOTOR_ON",
+		"MOTOR_OFF",
         "READ_LIGHT",
         "READ_MOTOR",
         "READ_PH",

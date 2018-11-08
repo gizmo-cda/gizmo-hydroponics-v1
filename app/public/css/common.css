@@ -8,3 +8,34 @@ a {
     color: rgb(50, 120, 170);
     text-decoration: none;
 }
+
+div.grid {
+    margin: 0 auto;
+    padding-top: 15pt;
+    width: 300pt;
+}
+
+div.cell {
+    position: relative;
+    height: 100pt;
+    background-color: rgba(255, 255, 255, 0.15);
+    margin-top: 5pt;
+}
+
+div.value {
+    padding-top: 10pt;
+    text-align: center;
+    vertical-align: middle;
+    font-family: sans-serif;
+    font-size: 62pt;
+    color: rgb(192, 192, 255);
+}
+
+div.bottom {
+    position: absolute;
+    bottom: 10pt;
+    right: 10pt;
+    font-family: sans-serif;
+    font-size: 14pt;
+    color: rgb(71, 27, 9);
+}

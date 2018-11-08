@@ -1,9 +1,9 @@
 function get_sensor_data(req, res) {
-    res.render("sensors", { data: {
-        ph: 0,
-        temperature: 1,
-        ec: 2
-    }});
+    res.render("sensors", {
+        ph: 10.01,
+        temperature: 100.67,
+        ec: 200.67
+    });
 }
 
 
