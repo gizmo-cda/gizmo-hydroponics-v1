@@ -39,7 +39,7 @@ void loop() {
 }
 
 void add_byte(byte value) {
-  if (buf_len + 1 < sizeof(buf)) {
+  if (buf_len + 1 <= sizeof(buf)) {
     buf[buf_len++] = value & 0xFF;
   }
   else {
@@ -48,7 +48,7 @@ void add_byte(byte value) {
 }
 
 void add_int(int value) {
-  if (buf_len + 2 < sizeof(buf)) {
+  if (buf_len + 2 <= sizeof(buf)) {
     buf[buf_len++] = value & 0xFF;
     buf[buf_len++] = (value >> 8) & 0xFF;
   }
