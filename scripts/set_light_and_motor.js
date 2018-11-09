@@ -12,25 +12,23 @@ function sleep(millis) {
 // main
 
 const bus = i2c.openSync(1);
+const state = process.argv[2];
 
 async function main() {
-    const commands = [
-        "LIGHT_ON",
-        "LIGHT_OFF",
-        "MOTOR_ON",
-        "MOTOR_OFF",
-        "READ_LIGHT",
-        "READ_MOTOR",
-        "READ_PH",
-        "READ_TEMPERATURE",
-        "READ_EC",
-        "READ_ALL"
-    ];
+    console.log(`state = '${state}'`);
+
+    let commands =
+        state === "1"
+            ? [ "LIGHT_ON", "MOTOR_ON", "READ_LIGHT", "READ_MOTOR" ]
+            : [ "LIGHT_OFF", "MOTOR_OFF", "READ_LIGHT", "READ_MOTOR" ];
 
     for (var cmd of commands) {
+        console.log(`sending '${cmd}'`);
         send_command(bus, cmd);
         await sleep(1000);
     }
+
+    console.log("done");
 }
 
 main();
