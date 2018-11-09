@@ -1,6 +1,6 @@
 {
     "verbose": true,
-    "ignore": [ "scratch/*" ],
+    "ignore": [ "scratch/*", "db/*" ],
     "execMap": {
         "js": "node"
     },

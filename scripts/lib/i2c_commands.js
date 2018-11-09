@@ -129,6 +129,8 @@ function parse_result(return_info, buffer) {
 }
 
 function send_command(bus, command_name) {
+    var result;
+
     if (command_name in COMMANDS) {
         let command = COMMANDS[command_name];
         let output_buffer = new Buffer.from([command.opcode]);
@@ -139,17 +141,14 @@ function send_command(bus, command_name) {
         if (result_buffer !== null && result_buffer !== undefined) {
             bus.i2cReadSync(I2C_ADDRESS, result_buffer.length, result_buffer);
 
-            let parsed_result = parse_result(command.result, result_buffer);
-
-            console.log(JSON.stringify(parsed_result, null, 2));
+            result = parse_result(command.result, result_buffer);
         }
-        // else {
-        //     console.log("no return value");
-        // }
     }
     else {
         console.error(`unrecognized command '${command_name}'`);
     }
+
+    return result;
 }
 
 

@@ -1,5 +1,6 @@
 # Node
 node_modules/
+app/db/
 
 # macOS
 .DS_Store

@@ -20,7 +20,8 @@
     "express": "^4.16.4",
     "i2c-bus": "^4.0.5",
     "morgan": "^1.9.1",
-    "mustache-express": "^1.2.8"
+    "mustache-express": "^1.2.8",
+    "request": "^2.88.0"
   },
   "devDependencies": {
     "nodemon": "^1.18.6"
