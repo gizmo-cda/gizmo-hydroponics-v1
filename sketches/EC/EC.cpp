@@ -1,19 +1,10 @@
 #include "EC.h"
 
 
-EC::EC(float temperatureCoefficient, float K)
+EC::EC(DallasTemperature *sensors)
 {
-  _temp_coefficient = temperatureCoefficient;
-  _k = K;
-
   // adding digital pin resistance, see README for an explanation
   _r1 += _ra;
-
-  // setup oneWire instance to communicate with any OneWire devices
-  _oneWire = new OneWire(_one_wire_bus);
-
-  // user our oneWire reference with Dallas Temperature.
-  _sensors = new DallasTemperature(_oneWire);
 
   // set ground pin as output for temperature probe
   // and set to ground so it can sink current
@@ -29,8 +20,11 @@ EC::EC(float temperatureCoefficient, float K)
   pinMode(_ec_power, OUTPUT);
   pinMode(_ec_ground, OUTPUT);
   digitalWrite(_ec_ground, LOW);
- 
- // gives sensor time to settle
+}
+
+void EC::begin()
+{
+  // gives sensor time to settle
   delay(100);
   _sensors->begin();
   delay(100);

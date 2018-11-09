@@ -2,14 +2,14 @@
 #define EC_h
 
 #include "Arduino.h"
-#include <OneWire.h>
 #include <DallasTemperature.h>
 
 class EC
 {
   public:
-    EC(float temperatureCoefficient, float K);
+    EC(DallasTemperature *sensor);
 
+    void begin();
     void update_readings();
     float get_ec();
     float get_ec25();
@@ -17,7 +17,6 @@ class EC
     float get_temperature();
 
   private:
-    OneWire *_oneWire;
     DallasTemperature *_sensors;
 
     float _temperature;
@@ -34,8 +33,8 @@ class EC
     int _ec_power            = A3;
     
     // coefficients and other constants
-    float _k;
-    float _temp_coefficient;
+    float _k                 = 5.81;
+    float _temp_coefficient  = 0.019;
     float _ppm_conversion    = 0.7;
     int _r1                  = 1000;
     int _ra                  = 25;    // resistance of powering pins
