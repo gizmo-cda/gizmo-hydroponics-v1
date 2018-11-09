@@ -18,7 +18,14 @@ async function main() {
         let command = process.argv[i].toUpperCase();
 
         console.log(`sending '${command}'`);
-        send_command(bus, command);
+        let result = send_command(bus, command);
+
+        // show result
+        if (result !== null && result !== undefined) {
+            console.log(JSON.stringify(result, null, 2));
+        }
+
+        // give i2c some time before sending another command
         await sleep(500);
     }
 }
