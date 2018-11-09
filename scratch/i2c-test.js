@@ -36,19 +36,19 @@ const COMMANDS = {
     READ_PH: {
         opcode: 7,
         result: {
-            value: "word"
+            value: "float"
         }
     },
     READ_TEMPERATURE: {
         opcode: 8,
         result: {
-            value: "word"
+            value: "float"
         }
     },
     READ_EC: {
         opcode: 9,
         result: {
-            value: "word"
+            value: "float"
         }
     },
     READ_ALL: {
@@ -56,9 +56,9 @@ const COMMANDS = {
         result: {
             light_value: "byte",
             motor_value: "byte",
-            ph_value: "word",
-            temperature_value: "word",
-            ec_value: "word",
+            ph_value: "float",
+            temperature_value: "float",
+            ec_value: "float",
         }
     }
 };
@@ -81,6 +81,10 @@ function get_return_buffer(return_info) {
 
                 case "word":
                     size += 2;
+                    break;
+
+                case "float":
+                    size += 4;
                     break;
 
                 default:
@@ -112,6 +116,13 @@ function parse_result(return_info, buffer) {
                 case "word":
                     result[p] = buffer[offset] + (buffer[offset + 1] << 8);
                     offset += 2;
+                    break;
+
+                case "float":
+                    let byteArray = new Int8Array(buffer.slice(offset, offset + 4));
+                    let floatArray = new Float32Array(byteArray.buffer);
+                    offset += 4;
+                    result[p] = floatArray[0];
                     break;
 
                 default:
@@ -156,10 +167,10 @@ function sleep(millis) {
 
 async function main() {
     const commands = [
-		"LIGHT_ON",
-		"LIGHT_OFF",
-		"MOTOR_ON",
-		"MOTOR_OFF",
+        "LIGHT_ON",
+        "LIGHT_OFF",
+        "MOTOR_ON",
+        "MOTOR_OFF",
         "READ_LIGHT",
         "READ_MOTOR",
         "READ_PH",
