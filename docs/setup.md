@@ -4,6 +4,7 @@
 - [Setup Pimoroni](#setup-pimoroni)
 - [Setup Service](#setup-service)
 - [Setup Kiosk Mode](#setup-kiosk-mode)
+- [Setup crontab](#setup-crontab)
 
 ---
 
@@ -163,3 +164,19 @@ This will:
 - prevent the screen from going black
 - make the cursor disappear after 3 seconds of inactivity
 - will open Chromium in kiosk mode
+
+# Setup crontab
+
+NOTE: This section has not been finalized. The crontab entry below is being used for testing only.
+
+Edit the pi user's crontab:
+
+```bash
+crontab -e
+```
+
+If you are asked to choose an editor, use `vim.basic`. Add the following line to the bottom of the crontab and save your file:
+
+```
+*/1 * * * * /home/pi/n/bin/node /home/pi/hydroponics_app/scripts/send_commands.js light_on read_light 2>&1 | /usr/bin/logger -t hydro_i2c
+```
