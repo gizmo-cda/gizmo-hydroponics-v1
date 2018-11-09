@@ -1,3 +1,5 @@
+
+// 181107 changed pin for EC power to A3 from A4 to allow A4 use for I2C. line 77
 /*
   ElCheapo Arduino EC-PPM measurments
  
@@ -63,7 +65,7 @@ int R1= 1000;
 int Ra=25; //Resistance of powering Pins
 int ECPin= A0;
 int ECGround=A1;
-int ECPower =A4;
+int ECPower =A3;  //changed to A3 at marty request so A4 can be used for I2C
  
  
 //*********** Converting to ppm [Learn to use EC it is much better**************//
