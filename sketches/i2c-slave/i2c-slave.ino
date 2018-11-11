@@ -1,7 +1,11 @@
 #include <Wire.h>
-#include <OneWire.h>
-#include <DallasTemperature.h>
 #include <EC.h>
+
+// custom data types
+typedef union float_bytes {
+  byte byte_values[4];
+  float float_value;
+} FLOAT_BYTES;
 
 // i2c configuration
 #define I2C_ADDRESS      4
@@ -19,9 +23,6 @@
 #define READ_EC          9
 #define READ_ALL         10
 
-// one wire configuration
-#define ONE_WIRE_BUS 10
-
 // useful constants
 #define ON  1
 #define OFF 0
@@ -29,21 +30,13 @@
 // globals
 byte light_state = OFF;
 byte motor_state = OFF;
-
 byte buf[14];
 int buf_len = 0;
 
-// setup oneWire instance to communicate with any OneWire devices
-// and pass along oneWire reference to Dallas Temperature.
-OneWire oneWire = OneWire(ONE_WIRE_BUS);
-DallasTemperature sensors = DallasTemperature(&oneWire);
-EC ec = EC(&sensors);
+// EC/OneWire configuration
+#define ONE_WIRE_BUS 10
 
-// custom data types
-typedef union float_bytes {
-  byte byte_values[4];
-  float float_value;
-} FLOAT_BYTES;
+EC ec = EC(ONE_WIRE_BUS);
 
 void setup() {
   // turn on LED
@@ -59,7 +52,7 @@ void setup() {
   Wire.onRequest(sendData);
 
   // initialize onewire
-  Serial.println("Initializing OneWire...");
+  Serial.println("Initializing EC (OneWire/DallasTemperature)...");
   ec.begin();
 
   // we're ready to go
