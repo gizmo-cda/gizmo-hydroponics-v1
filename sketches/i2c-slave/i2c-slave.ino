@@ -1,5 +1,5 @@
 #include <Wire.h>
-#include <EC.h>
+#include "EC.h"
 
 // custom data types
 typedef union float_bytes {
@@ -60,7 +60,7 @@ void setup() {
 }
 
 void loop() {
-  delay(500);
+  delay(200);
 }
 
 void add_byte(byte value) {
