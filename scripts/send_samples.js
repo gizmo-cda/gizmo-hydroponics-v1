@@ -14,25 +14,15 @@ const id_file = path.join(db_dir, "id.json");
 const id = require(id_file);
 
 
-function sleep(millis) {
-    return new Promise(resolve => setTimeout(resolve, millis));
-}
-
-
 // main
 
 const bus = i2c.openSync(1);
 
 // read sensors
-const result = send_command(bus, "READ_ALL");
+const data = send_command(bus, "READ_ALL");
 
-// transform data
-const data = {
-    datetime: Date.now(),
-    temperature: result.temperature_value,
-    ec: result.ec_value,
-    pH: result.ph_value
-};
+// include read date/time
+data.datetime = Date.now();
 
 // write to log file for backup
 fs.appendFileSync(samples_file, JSON.stringify(data));
