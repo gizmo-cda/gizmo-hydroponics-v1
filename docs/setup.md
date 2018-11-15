@@ -112,29 +112,29 @@ Simply follow the prompts.
 Run the following to initialize the service and make it start automatically when the system boots:
 
 ```bash
-sudo cp gizmo-enviro.service /etc/systemd/system
-sudo systemctl enable gizmo-enviro
+sudo cp hydro-web.service /etc/systemd/system
+sudo systemctl enable hydro-web
 ```
 
 You can start/stop/restart the service using the following commands:
 
 ```bash
-sudo systemctl start gizmo-enviro
-sudo systemctl stop gizmo-enviro
-sudo systemctl restart gizmo-enviro
+sudo systemctl start hydro-web
+sudo systemctl stop hydro-web
+sudo systemctl restart hydro-web
 ```
 
 If you make changes to the service file, you will need to reload the service daemon and restart the service
 
 ```bash
 sudo systemctl daemon-reload
-sudo systemctl restart gizmo-enviro
+sudo systemctl restart hydro-web
 ```
 
 You can check the status of your service:
 
 ```bash
-systemctl status gizmo-enviro
+systemctl status hydro-web
 ```
 
 # Setup Kiosk Mode
