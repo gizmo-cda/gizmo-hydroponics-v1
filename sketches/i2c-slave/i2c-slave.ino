@@ -27,6 +27,8 @@ typedef union float_bytes {
 // useful constants
 #define ON  1
 #define OFF 0
+#define PIN_OFF 1
+#define PIN_ON 0
 
 // globals
 byte light_state = OFF;
@@ -44,22 +46,26 @@ EC ec = EC(ONE_WIRE_BUS);
 PH ph = PH();
 
 void setup() {
-  // turn on LED
-  pinMode(13, OUTPUT);
-
-  pinMode(LIGHT_PIN, OUTPUT);
-  pinMode(MOTOR_PIN, OUTPUT);
-
   // start serial for output
   Serial.begin(9600);
   
+  // turn on LED
+  pinMode(13, OUTPUT);
+
+  // initialize light and motor control pins
+  Serial.println("Initializing light and motor...");
+  pinMode(LIGHT_PIN, OUTPUT);
+  pinMode(MOTOR_PIN, OUTPUT);
+  digitalWrite(LIGHT_PIN, PIN_OFF);
+  digitalWrite(MOTOR_PIN, PIN_OFF);
+
   // initialize i2c as slave and setup callbacks
   Serial.println("Initializing I2C...");
   Wire.begin(I2C_ADDRESS);
   Wire.onReceive(receiveData);
   Wire.onRequest(sendData);
 
-  // initialize onewire
+  // initialize ec
   Serial.println("Initializing EC (OneWire/DallasTemperature)...");
   ec.begin();
 
@@ -122,22 +128,22 @@ void receiveData(int byteCount) {
       case LIGHT_ON:
         Serial.println("light on");
         light_state = ON;
-        digitalWrite(LIGHT_PIN, 0);
+        digitalWrite(LIGHT_PIN, PIN_ON);
         break;
       case LIGHT_OFF:
         Serial.println("light off");
         light_state = OFF;
-        digitalWrite(LIGHT_PIN, 1);
+        digitalWrite(LIGHT_PIN, PIN_OFF);
         break;
       case MOTOR_ON:
         Serial.println("motor on");
         motor_state = ON;
-        digitalWrite(MOTOR_PIN, 0);
+        digitalWrite(MOTOR_PIN, PIN_ON);
         break;
       case MOTOR_OFF:
         Serial.println("motor off");
         motor_state = OFF;
-        digitalWrite(MOTOR_PIN, 1);
+        digitalWrite(MOTOR_PIN, PIN_OFF);
         break;
       case READ_LIGHT:
         Serial.println("read light");
