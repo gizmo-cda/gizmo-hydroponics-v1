@@ -48,11 +48,11 @@ const COMMANDS = {
     READ_ALL: {
         opcode: 10,
         result: {
-            light_value: "byte",
-            motor_value: "byte",
-            ph_value: "float",
-            temperature_value: "float",
-            ec_value: "float",
+            light: "byte",
+            motor: "byte",
+            pH: "float",
+            temperature: "float",
+            ec: "float",
         }
     }
 };
