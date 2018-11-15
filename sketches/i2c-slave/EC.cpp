@@ -23,7 +23,7 @@ void EC::begin()
   pinMode(temp_probe_positive , OUTPUT);
   digitalWrite(temp_probe_positive , HIGH);
 
-// set source and sinking pins and leave ground connected permanently
+  // set source and sinking pins and leave ground connected permanently
   pinMode(ec_pin, INPUT);
   pinMode(ec_power, OUTPUT);
   pinMode(ec_ground, OUTPUT);
