@@ -1,5 +1,6 @@
 #include <Wire.h>
 #include "EC.h"
+#include "PH.h"
 
 // custom data types
 typedef union float_bytes {
@@ -33,14 +34,21 @@ byte motor_state = OFF;
 byte buf[14];
 int buf_len = 0;
 
+#define LIGHT_PIN 5   // D2
+#define MOTOR_PIN 6   // D3
+
 // EC/OneWire configuration
 #define ONE_WIRE_BUS 10
 
 EC ec = EC(ONE_WIRE_BUS);
+PH ph = PH();
 
 void setup() {
   // turn on LED
   pinMode(13, OUTPUT);
+
+  pinMode(LIGHT_PIN, OUTPUT);
+  pinMode(MOTOR_PIN, OUTPUT);
 
   // start serial for output
   Serial.begin(9600);
@@ -60,7 +68,8 @@ void setup() {
 }
 
 void loop() {
-  delay(200);
+  ec.update_readings();
+  ph.update_readings();
 }
 
 void add_byte(byte value) {
@@ -113,18 +122,22 @@ void receiveData(int byteCount) {
       case LIGHT_ON:
         Serial.println("light on");
         light_state = ON;
+        digitalWrite(LIGHT_PIN, 0);
         break;
       case LIGHT_OFF:
         Serial.println("light off");
         light_state = OFF;
+        digitalWrite(LIGHT_PIN, 1);
         break;
       case MOTOR_ON:
         Serial.println("motor on");
         motor_state = ON;
+        digitalWrite(MOTOR_PIN, 0);
         break;
       case MOTOR_OFF:
         Serial.println("motor off");
         motor_state = OFF;
+        digitalWrite(MOTOR_PIN, 1);
         break;
       case READ_LIGHT:
         Serial.println("read light");
@@ -136,30 +149,23 @@ void receiveData(int byteCount) {
         break;
       case READ_PH:
         Serial.println("read pH");
-        add_float(0.5);
+        add_float(ph.get_pH());
         break;
       case READ_TEMPERATURE:
         Serial.println("read temperature");
-//        ec.update_readings();
-//        add_float(ec.get_temperature());
-        add_float(0.6);
+        add_float(ec.get_temperature());
         break;
       case READ_EC:
         Serial.println("read ec");
-//        ec.update_readings();
-//        add_float(ec.get_ec());
-        add_float(0.7);
+        add_float(ec.get_ec());
         break;
       case READ_ALL:
         Serial.println("read all");
-//        ec.update_readings();
         add_byte(light_state);
         add_byte(motor_state);
-        add_float(0.5);
-        add_float(0.6);
-        add_float(0.7);
-//        add_float(ec.get_temperature());
-//        add_float(ec.get_ec());
+        add_float(ph.get_pH());
+        add_float(ec.get_temperature());
+        add_float(ec.get_ec());
         break;
       default:
         Serial.println("ignoring unrecognized command");
