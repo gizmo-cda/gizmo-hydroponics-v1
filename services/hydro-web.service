@@ -2,8 +2,8 @@
 Description=Gizmo Hydroponics Kiosk
 
 [Service]
-ExecStart=/home/pi/n/bin/node /home/pi/hydroponics_app/app.js
-WorkingDirectory=/home/pi/hydroponics_app
+ExecStart=/home/pi/n/bin/node /home/pi/app/app.js
+WorkingDirectory=/home/pi/app
 Restart=always
 RestartSec=10
 StandardOutput=syslog
