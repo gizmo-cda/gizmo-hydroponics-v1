@@ -27,8 +27,8 @@ typedef union float_bytes {
 // useful constants
 #define ON  1
 #define OFF 0
-#define PIN_OFF 1
-#define PIN_ON 0
+#define PIN_OFF HIGH
+#define PIN_ON LOW
 
 // globals
 byte light_state = OFF;
