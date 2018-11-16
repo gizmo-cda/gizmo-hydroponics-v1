@@ -46,28 +46,51 @@ const COMMANDS = {
         }
     },
     READ_ALL: {
-        opcode: 10,
+        opcode: 11,
         result: {
             light: "byte",
             motor: "byte",
             pH: "float",
             temperature: "float",
-            ec: "float",
+            ec: "float"
+        }
+    },
+    READ_ALL_EXTENDED: {
+        opcode: 11,
+        result: {
+            relays: {
+                light: "byte",
+                motor: "byte"
+            },
+            ph: {
+                voltage: "float",
+                pH: "float"
+            },
+            ec: {
+                temperature: "float",
+                ec: "float",
+                ec25: "float",
+                ppm: "float"
+            }
         }
     }
 };
 
 
-function get_return_buffer(return_info) {
+function get_buffer_size(return_info) {
     if (return_info === undefined || return_info === null) {
         return null;
     }
-    else {
-        let size = 0;
 
-        for (var p in return_info) {
-            const type = return_info[p];
+    let size = 0;
 
+    for (var p in return_info) {
+        const type = return_info[p];
+
+        if (typeof type === "object") {
+            size += get_buffer_size(type);
+        }
+        else {
             switch (type) {
                 case "byte":
                     size += 1;
@@ -85,47 +108,69 @@ function get_return_buffer(return_info) {
                     console.error(`unrecognized data type '${type}'`);
             }
         }
-
-        return Buffer.alloc(size);
     }
+
+    return size;
+}
+
+function get_return_buffer(return_info) {
+    if (return_info === undefined || return_info === null) {
+        return null;
+    }
+
+    let size = get_buffer_size(return_info);
+    // console.log(size);
+
+    return {
+        buffer: Buffer.alloc(size),
+        offset: 0,
+        get_byte: function() { return this.buffer[this.offset++] },
+        get_word: function() { return this.buffer[this.offset++] + (this.buffer[this.offset++] << 8) },
+        get_float: function() {
+            let byteArray = new Int8Array(this.buffer.slice(this.offset, this.offset + 4));
+            let floatArray = new Float32Array(byteArray.buffer);
+            
+            this.offset += 4;
+            
+            return floatArray[0];
+        }
+    };
 }
 
 function parse_result(return_info, buffer) {
     if (return_info === undefined || return_info === null) {
         return null;
     }
-    else {
-        let offset = 0;
-        let result = {};
 
-        for (var p in return_info) {
-            const type = return_info[p];
+    let result = {};
 
+    for (var p in return_info) {
+        const type = return_info[p];
+
+        if (typeof type === "object") {
+            result[p] = parse_result(type, buffer);
+        }
+        else {
             switch (type) {
                 case "byte":
-                    result[p] = buffer[offset];
-                    offset += 1;
+                    result[p] = buffer.get_byte();
                     break;
 
                 case "word":
-                    result[p] = buffer[offset] + (buffer[offset + 1] << 8);
-                    offset += 2;
+                    result[p] = buffer.get_word();
                     break;
 
                 case "float":
-                    let byteArray = new Int8Array(buffer.slice(offset, offset + 4));
-                    let floatArray = new Float32Array(byteArray.buffer);
-                    offset += 4;
-                    result[p] = floatArray[0];
+                    result[p] = buffer.get_float();
                     break;
 
                 default:
                     console.error(`unrecognized data type '${type}'`);
             }
         }
-
-        return result;
     }
+
+    return result;
 }
 
 function send_command(bus, command_name) {
@@ -139,7 +184,7 @@ function send_command(bus, command_name) {
         bus.i2cWriteSync(I2C_ADDRESS, output_buffer.length, output_buffer);
 
         if (result_buffer !== null && result_buffer !== undefined) {
-            bus.i2cReadSync(I2C_ADDRESS, result_buffer.length, result_buffer);
+            bus.i2cReadSync(I2C_ADDRESS, result_buffer.buffer.length, result_buffer.buffer);
 
             result = parse_result(command.result, result_buffer);
         }
