@@ -22,7 +22,8 @@ void PH::update_readings() {
     }
 
     _voltage = readings_average() * 5.0 / 1024.0;
-    _pH = 3.5 * _voltage + offset;
+    _pH = map_range(_voltage, voltage_4, voltage_7, 4.0, 7.0);
+//    _pH = map_range(_voltage, voltage_4, voltage_10, 4.0, 10.0);
 
     _last_sample_time = millis();
   }

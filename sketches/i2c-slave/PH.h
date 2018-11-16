@@ -12,8 +12,10 @@ class PH
 
     // pins
     int sensor_pin = A7;
-    float offset = 0.23;
     int sampling_interval = 20;
+    float voltage_4 = 1.073;
+    float voltage_7 = 1.945;
+//    float voltage_10 = 3.075;
 
     void update_readings();
     float get_voltage();
