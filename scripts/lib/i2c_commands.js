@@ -46,7 +46,7 @@ const COMMANDS = {
         }
     },
     READ_ALL: {
-        opcode: 11,
+        opcode: 10,
         result: {
             light: "byte",
             motor: "byte",
