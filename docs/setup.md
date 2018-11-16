@@ -178,5 +178,17 @@ crontab -e
 If you are asked to choose an editor, use `vim.basic`. Add the following line to the bottom of the crontab and save your file:
 
 ```
-*/1 * * * * /home/pi/n/bin/node /home/pi/hydroponics_app/scripts/send_commands.js light_on read_light 2>&1 | /usr/bin/logger -t hydro_i2c
+0 6 * * * /home/pi/n/bin/node /home/pi/app/scripts/send_commands.js light_on read_light 2>&1 | /usr/bin/logger -t hydro_i2c
+0 18 * * * /home/pi/n/bin/node /home/pi/app/scripts/send_commands.js light_off read_light 2>&1 | /usr/bin/logger -t hydro_i2c
+
+0 0 * * * /home/pi/n/bin/node /home/pi/app/scripts/send_commands.js motor_on read_motor 2>&1 | /usr/bin/logger -t hydro_i2c
+5 0 * * * /home/pi/n/bin/node /home/pi/app/scripts/send_commands.js motor_off read_motor 2>&1 | /usr/bin/logger -t hydro_i2c
+0 6 * * * /home/pi/n/bin/node /home/pi/app/scripts/send_commands.js motor_on read_motor 2>&1 | /usr/bin/logger -t hydro_i2c
+5 6 * * * /home/pi/n/bin/node /home/pi/app/scripts/send_commands.js motor_off read_motor 2>&1 | /usr/bin/logger -t hydro_i2c
+0 12 * * * /home/pi/n/bin/node /home/pi/app/scripts/send_commands.js motor_on read_motor 2>&1 | /usr/bin/logger -t hydro_i2c
+5 12 * * * /home/pi/n/bin/node /home/pi/app/scripts/send_commands.js motor_off read_motor 2>&1 | /usr/bin/logger -t hydro_i2c
+0 18 * * * /home/pi/n/bin/node /home/pi/app/scripts/send_commands.js motor_on read_motor 2>&1 | /usr/bin/logger -t hydro_i2c
+5 18 * * * /home/pi/n/bin/node /home/pi/app/scripts/send_commands.js motor_off read_motor 2>&1 | /usr/bin/logger -t hydro_i2c
+
+0 * * * * /home/pi/n/bin/node /home/pi/app/scripts/send_samples.js 2>&1 | /usr/bin/logger -t hydro_samples
 ```
