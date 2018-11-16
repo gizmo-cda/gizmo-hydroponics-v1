@@ -36,8 +36,8 @@ byte motor_state = OFF;
 byte buf[14];
 int buf_len = 0;
 
-#define LIGHT_PIN 5   // D2
-#define MOTOR_PIN 6   // D3
+#define LIGHT_PIN 4
+#define MOTOR_PIN 5
 
 // EC/OneWire configuration
 #define ONE_WIRE_BUS 10
@@ -163,7 +163,7 @@ void receiveData(int byteCount) {
         break;
       case READ_EC:
         Serial.println("read ec");
-        add_float(ec.get_ec());
+        add_float(ec.get_ec25());
         break;
       case READ_ALL:
         Serial.println("read all");
@@ -171,7 +171,7 @@ void receiveData(int byteCount) {
         add_byte(motor_state);
         add_float(ph.get_pH());
         add_float(ec.get_temperature());
-        add_float(ec.get_ec());
+        add_float(ec.get_ec25());
         break;
       default:
         Serial.println("ignoring unrecognized command");
