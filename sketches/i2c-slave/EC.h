@@ -25,6 +25,7 @@ class EC
     int r1                  = 1000;
     int ra                  = 25;    // resistance of powering pins
     float v_in              = 5;
+    int sampling_interval   = 5000;
 
     void begin();
     void update_readings();
@@ -38,6 +39,7 @@ class EC
     OneWire *_oneWire;
     DallasTemperature *_sensors;
 
+    unsigned long _last_sample_time = 0;
     float _temperature;
     float _ec;
     float _ec25;

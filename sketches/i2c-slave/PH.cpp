@@ -1,5 +1,13 @@
 #include "PH.h"
 
+float map_range(float value, float in_min, float in_max, float out_min, float out_max) {
+  float out_delta = out_max - out_min;
+  float in_delta = in_max - in_min;
+
+  return (value - in_min) * out_delta / in_delta + out_min;
+}
+
+
 PH::PH() {
 }
 

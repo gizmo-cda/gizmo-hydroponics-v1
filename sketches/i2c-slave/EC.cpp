@@ -37,32 +37,38 @@ void EC::begin()
 
 void EC::update_readings()
 {
-  float raw;
-  float v_drop;
-  float rc;
+  unsigned long elapsed_time = millis() - _last_sample_time;
 
-  // read temperature of solution
-  _sensors->requestTemperatures();
-  _temperature = _sensors->getTempCByIndex(0);
+  if (elapsed_time > sampling_interval) {
+    float raw;
+    float v_drop;
+    float rc;
 
-  // estimate resistance of liquid
-  // NOTE: we need to read the pin twice because first reading will be low
-  // due to residual charge
-  digitalWrite(ec_power, HIGH);
-  raw = analogRead(ec_pin);
-  raw = analogRead(ec_pin);
-  digitalWrite(ec_power, LOW);
+    // read temperature of solution
+    _sensors->requestTemperatures();
+    _temperature = _sensors->getTempCByIndex(0);
 
-  // calculate E 
-  v_drop = (v_in * raw) / 1024.0;
-  rc = (v_drop * r1) / (v_in - v_drop);
-  // account for digital pin resitance
-  rc -= ra;
-  _ec = 1000.0 / (rc * k);
+    // estimate resistance of liquid
+    // NOTE: we need to read the pin twice because first reading will be low
+    // due to residual charge
+    digitalWrite(ec_power, HIGH);
+    raw = analogRead(ec_pin);
+    raw = analogRead(ec_pin);
+    digitalWrite(ec_power, LOW);
 
-  // compensate for temperaure
-  _ec25  =  _ec / (1.0 + temp_coefficient * (_temperature - 25.0));
-  _ppm = _ec25 * (ppm_conversion * 1000);
+    // calculate E 
+    v_drop = (v_in * raw) / 1024.0;
+    rc = (v_drop * r1) / (v_in - v_drop);
+    // account for digital pin resitance
+    rc -= ra;
+    _ec = 1000.0 / (rc * k);
+
+    // compensate for temperaure
+    _ec25  =  _ec / (1.0 + temp_coefficient * (_temperature - 25.0));
+    _ppm = _ec25 * (ppm_conversion * 1000);
+
+    _last_sample_time = millis();
+  }
 }
 
 float EC::get_ec()

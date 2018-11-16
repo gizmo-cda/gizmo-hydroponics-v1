@@ -12,7 +12,7 @@ class PH
 
     // pins
     int sensor_pin = A7;
-    float offset = -0.37;
+    float offset = 0.23;
     int sampling_interval = 20;
 
     void update_readings();

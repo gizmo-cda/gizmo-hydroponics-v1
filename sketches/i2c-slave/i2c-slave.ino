@@ -12,17 +12,18 @@ typedef union float_bytes {
 #define I2C_ADDRESS      4
 
 // i2c commands
-#define NO_OP            0
-#define LIGHT_ON         1
-#define LIGHT_OFF        2
-#define MOTOR_ON         3
-#define MOTOR_OFF        4
-#define READ_LIGHT       5
-#define READ_MOTOR       6
-#define READ_PH          7
-#define READ_TEMPERATURE 8
-#define READ_EC          9
-#define READ_ALL         10
+#define NO_OP             0
+#define LIGHT_ON          1
+#define LIGHT_OFF         2
+#define MOTOR_ON          3
+#define MOTOR_OFF         4
+#define READ_LIGHT        5
+#define READ_MOTOR        6
+#define READ_PH           7
+#define READ_TEMPERATURE  8
+#define READ_EC           9
+#define READ_ALL          10
+#define READ_ALL_EXTENDED 11
 
 // useful constants
 #define ON  1
@@ -33,7 +34,7 @@ typedef union float_bytes {
 // globals
 byte light_state = OFF;
 byte motor_state = OFF;
-byte buf[14];
+byte buf[26];
 int buf_len = 0;
 
 #define LIGHT_PIN 4
@@ -167,14 +168,32 @@ void receiveData(int byteCount) {
         break;
       case READ_ALL:
         Serial.println("read all");
+        // relay info
         add_byte(light_state);
         add_byte(motor_state);
+        // pH info
         add_float(ph.get_pH());
+        // ec info
         add_float(ec.get_temperature());
         add_float(ec.get_ec25());
         break;
+      case READ_ALL_EXTENDED:
+        Serial.println("read all, extended");
+        // relay info
+        add_byte(light_state);
+        add_byte(motor_state);
+        // pH info
+        add_float(ph.get_voltage());
+        add_float(ph.get_pH());
+        // ec info
+        add_float(ec.get_temperature());
+        add_float(ec.get_ec());
+        add_float(ec.get_ec25());
+        add_float(ec.get_ppm());
+        break;
       default:
-        Serial.println("ignoring unrecognized command");
+        Serial.print("ignoring unrecognized command: ");
+        Serial.println(command);
     }
   }
 }
