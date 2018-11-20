@@ -42,9 +42,20 @@ function get_sensor_data(req, res) {
     }
 }
 
+function get_schedule(req, res) {
+    res.render("schedule", {});
+}
+
+function save_schedule(req, res) {
+    console.log(`body = ${JSON.stringify(req.body)}`);
+
+    res.json({ message: "OK" });
+}
 
 module.exports = function(app) {
     return {
-        get_sensor_data: get_sensor_data
+        get_sensor_data: get_sensor_data,
+        get_schedule: get_schedule,
+        save_schedule: save_schedule
     }
 };
