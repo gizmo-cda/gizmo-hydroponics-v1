@@ -17,6 +17,7 @@
   "author": "Kevin Lindsey <kevin@kevlindev.com>",
   "license": "BSD-3-Clause",
   "dependencies": {
+    "body-parser": "^1.18.3",
     "express": "^4.16.4",
     "i2c-bus": "^4.0.5",
     "morgan": "^1.9.1",

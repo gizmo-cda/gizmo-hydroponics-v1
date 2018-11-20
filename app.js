@@ -1,8 +1,9 @@
-const path    = require('path');
-const express = require('express');
-const app     = express();
-const morgan  = require('morgan');
+const path       = require('path');
+const express    = require('express');
+const app        = express();
+const morgan     = require('morgan');
 const mustache   = require('mustache-express');
+const bodyParser = require('body-parser');
 
 // general configuration
 const HTTP_PORT = 8080;
@@ -21,6 +22,10 @@ app.use(morgan(LOGGING));
 app.engine('mustache', mustache());
 app.set('view engine', 'mustache');
 app.set('views', views_directory);
+
+// setup body parsing for forms and such
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
 // setup static content
 app.use(express.static(public_directory));
