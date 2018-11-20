@@ -5,4 +5,5 @@
 @xset -dpms
 @xset s noblank
 @unclutter -idle 3
+/home/pi/.config/lxsession/LXDE-pi/rotate_touch
 @chromium-browser --incognito --kiosk http://127.0.0.1:8080/
