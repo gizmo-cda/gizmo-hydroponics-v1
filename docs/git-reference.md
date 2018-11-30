@@ -2,8 +2,8 @@
 
 - [See Changes](#see-changes)
 - [Staging Files](#staging-files)
-- [Committing Files](#comitting-files)
-- [List Remotes](#list-remotes)
+- [Committing Files](#committing-files)
+- [Listing Remotes](#listing-remotes)
 - [Pushing Changes](#pushing-changes)
 - [Pulling Changes](#pulling-changes)
 
@@ -55,7 +55,7 @@ git commit -m "One-line message here"
 
 Note that if you exclude the `-m` option, your current EDITOR will be opened. The first line of the file will be the commit's title. This must be followed by a blank line. The remaining lines following the blank line will be a long description.
 
-# List Remotes
+# Listing Remotes
 
 You can think of remotes as "servers" or, put another way, machines other than the one you are talking to. Note that I did not say "the machine you are on". You could be using a terminal, logged into a Raspberry Pi, for instance. In that case, the machine you are talking to is the Raspberry Pi.
 
