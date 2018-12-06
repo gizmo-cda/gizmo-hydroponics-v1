@@ -25,7 +25,7 @@
 	source .bashrc
 	```
 - Set some aliases
-	```
+	```bash
 	vim /home/pi/.bash_aliases
 	alias ll='ls -alF'
 	alias ..='cd ..'
@@ -44,8 +44,8 @@
 	cat id.json
 	```
 - Rotate Screen
-	```
-	sudo vim boot/config.txt
+	```bash
+	sudo vim /boot/config.txt
 	display_rotate=3
 	```
 	- save and reboot

@@ -60,7 +60,7 @@
 //************************* User Defined Variables ********************************************************//
  
  
-float CalibrationEC=1.38; //EC value of Calibration solution is s/cm
+float CalibrationEC=1.28; //EC value of Calibration solution is s/cm
  
  
  
