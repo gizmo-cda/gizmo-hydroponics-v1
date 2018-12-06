@@ -145,17 +145,9 @@ systemctl status hydro-web
 sudo apt-get install unclutter
 ```
 
-- Create `/home/pi/.config/lxsession/LXDE-pi/autostart` and paste in the following content:
-
 ```
-@lxpanel --profile LXDE-pi
-@pcmanfm --desktop --profile LXDE-pi
-@xscreensaver -no-splash
-@xset s off
-@xset -dpms
-@xset s noblank
-@unclutter -idle 3
-@chromium-browser --incognito --kiosk http://127.0.0.1:8080/
+cd ~/app
+cp autostart rotate_touch ~/.config/lxsession/LXDE-pi/
 ```
 
 This will:

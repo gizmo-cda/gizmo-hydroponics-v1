@@ -1,16 +1,19 @@
 - Follow prompts to configure:
-	- password
 	- locale
-	- keyboard
 	- timezone
+	- keyboard
+	- password
+	- skip Wi-Fi
+	- skip system update
 - Set background image, if desired
 - Open Preferences->Raspberry Pi Configuration
 	- Set hostname
 	- Disable overscan
 	- Turn on SSH
 	- Turn on VNC
+	- Turn on I2C
 - Install utilities and node
-```bash
+	```bash
 	sudo apt-get update
 	sudo apt-get upgrade -y
 	sudo apt-get autoremove -y
@@ -36,5 +39,13 @@
 - Setup school ID
 	```bash
 	mkdir -p ~/app/app/db
-	cat '"<school-id>"' > id.json
-```
+	cd ~/app/app/db
+	echo '"<school-id>"' > id.json
+	cat id.json
+	```
+- Rotate Screen
+	```
+	sudo vim boot/config.txt
+	display_rotate=3
+	```
+	- save and reboot
