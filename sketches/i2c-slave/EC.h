@@ -19,7 +19,7 @@ class EC
     int ec_power            = A3;
     
     // coefficients and other constants
-    float k                 = 8.26;
+    float k                 = 9.76;
     float temp_coefficient  = 0.019;
     float ppm_conversion    = 0.7;
     int r1                  = 1000;
