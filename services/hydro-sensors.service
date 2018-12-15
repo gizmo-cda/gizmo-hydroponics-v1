@@ -1,0 +1,17 @@
+[Unit]
+Description=Gizmo Hydroponics Sensor Service
+
+[Service]
+ExecStart=/home/pi/n/bin/node /home/pi/app/sensor_service.js
+WorkingDirectory=/home/pi/app
+Restart=always
+RestartSec=10
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=hydro-sensors
+User=pi
+Group=pi
+Environment=NODE_ENV=production HTTP_PORT=8081
+
+[Install]
+WantedBy=multi-user.target
