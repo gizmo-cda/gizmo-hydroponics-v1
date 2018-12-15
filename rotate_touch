@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # 90° rotation
-#xinput --set-prop 9 --type=float "Coordinate Transformation Matrix" 0 1 0 -1 0 1 0 0 1
+#xinput --set-prop "FT5406 memory based driver" --type=float "Coordinate Transformation Matrix" 0 1 0 -1 0 1 0 0 1
 
 # 270° rotation
-xinput --set-prop 9 --type=float "Coordinate Transformation Matrix" 0 -1 1 1 0 0 0 0 1
+xinput --set-prop "FT5406 memory based driver" --type=float "Coordinate Transformation Matrix" 0 -1 1 1 0 0 0 0 1
