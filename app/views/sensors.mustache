@@ -6,57 +6,22 @@
         <meta http-equiv="refresh" content="60">
         <link rel="stylesheet" type="text/css" href="/css/common.css">
         <title>Sensors</title>
-        <script type="text/javascript">
-            function go() {
-                const toggles = document.querySelectorAll('[aria-pressed]');
-
-                toggles.forEach(toggle => {
-                    toggle.addEventListener('click', e => {  
-                        let pressed = e.target.getAttribute('aria-pressed') === 'true';
-                        let new_state = !pressed;
-                        let new_value = String(new_state);
-                        let id = e.target.id;
-
-                        e.target.setAttribute('aria-pressed', new_value);
-
-                        switch (id) {
-                            case "light":
-                                send_command(new_state ? "light_on" : "light_off");
-                                break;
-
-                            case "pump":
-                                send_command(new_state ? "motor_on" : "motor_off");
-                                break;
-
-                            default:
-                                console.error(`unknown button: ${id}`);
-                        }
-                    });
-                });
-            }
-
-            function send_command(command) {
-                fetch(`http://hydro.local:8081/${command}`, { method: "get" })
-                    .catch(err => {
-                        console.error("error sending command: " + err);
-                    });
-            }
-        </script>
+        <script type="text/javascript" src="/js/sensors.js"></script>
     </head>
     <body onload="go()">
         <img src="/images/gizmo-logo.png">
         <hr />
         <div class="grid">
             <div class="cell">
-                <div class="value">{{temperature}}</div>
+                <div id="temperature" class="value">{{temperature}}</div>
                 <div class="bottom">°C</div>
             </div>
             <div class="cell">
-                <div class="value">{{ec}}</div>
+                <div id="ec" class="value">{{ec}}</div>
                 <div class="bottom">Seimens/cm</div>
             </div>
             <div class="cell">
-                <div class="value">{{ph}}</div>
+                <div id="ph" class="value">{{ph}}</div>
                 <div class="bottom">pH</div>
             </div>
             <div class="buttons">
@@ -65,6 +30,9 @@
                 </div>
                 <div class="button">
                     <button id="pump" aria-pressed="{{motor}}">Pump</button>
+                </div>
+                <div class="button">
+                    <button id="sample" onclick="read_samples()">Sample</button>
                 </div>
             </div>
         </div>
