@@ -36,9 +36,7 @@
             }
 
             function send_command(command) {
-                fetch(`http://hyrdo.local:8081/${command}`, { method: "get" })
-                    .then(response => response.json())
-                    .then(json => console.log(JSON.stringify(json, null, 2)))
+                fetch(`http://hydro.local:8081/${command}`, { method: "get" })
                     .catch(err => {
                         console.error("error sending command: " + err);
                     });
