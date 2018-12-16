@@ -24,4 +24,4 @@ require('./sensor_service/routes/sensor_routes.js')(app);
 
 // setup HTTP
 app.listen(HTTP_PORT);
-console.log(`Hydroponics server started on port ${HTTP_PORT}`);
+console.log(`Sensor service started on port ${HTTP_PORT}`);
