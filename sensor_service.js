@@ -15,6 +15,11 @@ const app_directory = path.join(__dirname, "sensor_service");
 // setup logging
 app.use(morgan(LOGGING));
 
+app.use((req, res, next) => {
+    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8080')
+    next();
+});
+
 // setup body parsing for forms and such
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
