@@ -3,8 +3,6 @@
 const fs = require('fs');
 const path = require('path');
 const request = require('request');
-const i2c = require('i2c-bus');
-const { COMMANDS, send_command } = require('../scripts/lib/i2c_commands');
 
 
 const db_dir = path.join(__dirname, "..", "app", "db");
@@ -16,25 +14,27 @@ const id = require(id_file);
 
 // main
 
-const bus = i2c.openSync(1);
+request.get(
+    {
+        url: "http://localhost:8081/read_all"
+    },
+    (err, res, data) => {
+        // include read date/time
+        data.datetime = Date.now();
 
-// read sensors
-const data = send_command(bus, "READ_ALL");
+        // write to log file for backup
+        fs.appendFileSync(samples_file, JSON.stringify(data));
+        fs.writeFileSync(last_sample_file, JSON.stringify(data));
 
-// include read date/time
-data.datetime = Date.now();
+        // send data to web server
+        const config = {
+            url: `https://hydro.gizmo-cda.org/school/${id}/sample`,
+            json: data
+        };
 
-// write to log file for backup
-fs.appendFileSync(samples_file, JSON.stringify(data));
-fs.writeFileSync(last_sample_file, JSON.stringify(data));
-
-// send data to web server
-const config = {
-    url: `https://hydro.gizmo-cda.org/school/${id}/sample`,
-    json: data
-};
-
-request.post(
-    config,
-    (err, response, body) => console.log(body)
-);
+        request.post(
+            config,
+            (err, response, body) => console.log(body)
+        );
+    }
+)
