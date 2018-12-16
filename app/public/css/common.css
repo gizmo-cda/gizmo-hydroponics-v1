@@ -9,6 +9,8 @@ a {
     text-decoration: none;
 }
 
+/* Sensor Readings */
+
 div.grid {
     margin: 0 auto;
     padding-top: 15pt;
@@ -38,4 +40,37 @@ div.bottom {
     font-family: sans-serif;
     font-size: 14pt;
     color: rgb(71, 27, 9);
+}
+
+/* Buttons */
+
+div.buttons {
+    position: absolute;
+    bottom: 10pt;
+    text-align: center;
+}
+
+.buttons .button {
+    display: inline-block;
+}
+
+#light, #pump {
+    width: 75pt;
+    height: 30pt;
+}
+
+[aria-pressed] {
+    background-color: #777;
+}
+
+[aria-pressed="true"] {
+    background-color: #eee;
+}
+
+[aria-pressed]:focus {
+    outline: none;
+}
+
+[aria-pressed="true"]:focus {
+    outline: none;
 }

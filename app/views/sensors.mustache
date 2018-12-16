@@ -6,8 +6,45 @@
         <meta http-equiv="refresh" content="60">
         <link rel="stylesheet" type="text/css" href="/css/common.css">
         <title>Sensors</title>
+        <script type="text/javascript">
+            function go() {
+                const toggles = document.querySelectorAll('[aria-pressed]');
+
+                toggles.forEach(toggle => {
+                    toggle.addEventListener('click', e => {  
+                        let pressed = e.target.getAttribute('aria-pressed') === 'true';
+                        let new_state = !pressed;
+                        let new_value = String(new_state);
+                        let id = e.target.id;
+
+                        e.target.setAttribute('aria-pressed', new_value);
+
+                        switch (id) {
+                            case "light":
+                                send_command(new_state ? "light_on" : "light_off");
+                                break;
+
+                            case "pump":
+                                send_command(new_state ? "motor_on" : "motor_off");
+                                break;
+
+                            default:
+                                console.error(`unknown button: ${id}`);
+                        }
+                    });
+                });
+            }
+
+            function send_command(command) {
+                fetch(`http://hyrdo.local:8081/${command}`, { method: "get" })
+                    .then(response => console.log(response))
+                    .catch(err => {
+                        console.error("error sending command: " + err);
+                    });
+            }
+        </script>
     </head>
-    <body>
+    <body onload="go()">
         <img src="/images/gizmo-logo.png">
         <hr />
         <div class="grid">
@@ -22,6 +59,14 @@
             <div class="cell">
                 <div class="value">{{ph}}</div>
                 <div class="bottom">pH</div>
+            </div>
+            <div class="buttons">
+                <div class="button">
+                    <button id="light" aria-pressed="false">Light</button>
+                </div>
+                <div class="button">
+                    <button id="pump" aria-pressed="false">Pump</button>
+                </div>
             </div>
         </div>
     </body>
