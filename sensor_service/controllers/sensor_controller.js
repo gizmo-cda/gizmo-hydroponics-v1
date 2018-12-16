@@ -12,7 +12,12 @@ function get_sensor_data(req, res) {
     let command = req.params.command.toUpperCase();
     let result = send_command(bus, command);
 
-    res.json(result);
+    if (result !== null && result !== undefined) {
+        res.json(result);
+    }
+    else {
+        res.json({ "message": "OK" });
+    }
 }
 
 
