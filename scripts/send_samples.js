@@ -19,6 +19,8 @@ request.get(
         url: "http://localhost:8081/read_all"
     },
     (err, res, data) => {
+        data = JSON.parse(data);
+
         // include read date/time
         data.datetime = Date.now();
 

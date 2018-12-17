@@ -19,13 +19,14 @@ function read_last_sample() {
     let result = null;
 
     if (fs.existsSync(last_sample_file)) {
-        const text = fs.readFileSync(last_sample_file);
-        console.log(`text = ${text}`);
+        const text = fs.readFileSync(last_sample_file, { encoding: 'utf8' });
 
         try {
             result = JSON.parse(text);
         }
         catch(e) {
+            console.error("Faild to parse last sample");
+            console.error(text);
         }
     }
 

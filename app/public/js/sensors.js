@@ -1,5 +1,15 @@
 let temperature, ec, ph;
 
+function round(number, decimal_digits) {
+    if (number === undefined) {
+        return undefined;
+    }
+
+    const factor = Math.pow(10, decimal_digits);
+
+    return Math.round(number * factor) / factor;
+}
+
 function go() {
     const toggles = document.querySelectorAll('[aria-pressed]');
 
@@ -31,12 +41,12 @@ function go() {
 }
 
 function send_command(command) {
-    fetch(`http://hydro.local:8081/${command}`, { method: "get" })
+    fetch(`http://localhost:8081/${command}`, { method: "get" })
         .catch(err => console.error("error sending command: " + err) );
 }
 
 function read_samples() {
-    fetch('http://hydro.local:8081/read_all', { method: "get" })
+    fetch('http://localhost:8081/read_all', { method: "get" })
         .then(response => response.json())
         .then(update_samples)
         .catch(err => console.error("error sending command: " + err) );
@@ -45,7 +55,7 @@ function read_samples() {
 function update_samples(data) {
     const precision = 2;
 
-    temperature.innerText = data.temperature.toPrecision(precision);
-    ec.innerText = data.ec.toPrecision(precision);
-    ph.innerText = data.pH.toPrecision(precision);
+    temperature.innerText = round(data.temperature, precision),
+    ec.innerText = round(data.ec, precision),
+    ph.innerText = round(data.pH, precision)
 }
